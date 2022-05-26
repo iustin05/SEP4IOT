@@ -11,8 +11,12 @@
 #include <task.h>
 #include <semphr.h>
 
+#include <init_sensors.h>
+
 #include <stdio_driver.h>
 #include <packer.h>
+#include <status_leds.h>
+#include <serial.h>
 
 #include <xevent_groups.h>
 
@@ -25,20 +29,23 @@ void initLED()
 
 void appTask(void *pvParameters)
 {
-	initLED();
+	//initLED();
+	//initSensorsAndEvents();
+	
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 60000/portTICK_PERIOD_MS;
+	const TickType_t xFrequency = 20000/portTICK_PERIOD_MS;
 	xLastWakeTime = xTaskGetTickCount();
     for( ;; )
     {
+			
 			puts("[APP] Time-based checking start ->\n");
 			puts("[APP] Sending measurement start event bits...\n");
-			
+			xTaskDelayUntil( &xLastWakeTime, xFrequency );
 			xEventGroupSetBits(
 			getMeasureEventGroup(),
 			BIT_MEASURE_ALL );
 			
-			xTaskDelayUntil( &xLastWakeTime, xFrequency );
+			
     }
 }
 

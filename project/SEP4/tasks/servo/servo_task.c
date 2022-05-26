@@ -12,6 +12,7 @@
 #include <semphr.h>
 
 #include <stdio_driver.h>
+#include <serial.h>
 
 #include <configuration.h>
 

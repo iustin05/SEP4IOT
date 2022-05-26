@@ -13,6 +13,7 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\version.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  ../FreeRTOS/src/ATMEGA_FreeRTOS.h ../FreeRTOS/src/FreeRTOSConfig.h \
  ../FreeRTOS/src/projdefs.h ../FreeRTOS/src/portable.h \
  ../FreeRTOS/src/portmacro.h ../FreeRTOS/src/mpu_wrappers.h \
@@ -26,8 +27,9 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
- ../lib/app_tasks.h ../drivers/status_leds.h ../lib/init_sensors.h \
- ../drivers/rc_servo.h
+ ../lib/app_tasks.h ../drivers/status_leds.h ../lib/xevent_groups.h \
+ ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h \
+ ../lib/sensors_callback.h ../drivers/rc_servo.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -56,6 +58,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
 ../FreeRTOS/src/ATMEGA_FreeRTOS.h:
 
@@ -101,6 +105,12 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../drivers/status_leds.h:
 
-../lib/init_sensors.h:
+../lib/xevent_groups.h:
+
+../FreeRTOS/src/event_groups.h:
+
+../FreeRTOS/src/timers.h:
+
+../lib/sensors_callback.h:
 
 ../drivers/rc_servo.h:

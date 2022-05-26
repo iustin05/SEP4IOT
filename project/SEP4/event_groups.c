@@ -44,12 +44,13 @@ void initEventGroups(){
     /* Was the event group created successfully? */
     if( measureEventGroup == NULL )
     {
-		puts("Measure group created successfully\n");
+		printf("Not enough memory.");
         /* The event group was not created because there was insufficient
         FreeRTOS heap available. */
     }
     else
     {
+		printf("Measure group good\n");
         /* The event group was created. */
     }
 
@@ -59,12 +60,14 @@ void initEventGroups(){
     /* Was the event group created successfully? */
     if( dataReadyEventGroup == NULL )
     {
-		puts("Data Ready group created successfully\n");
+		printf("Not enough memory.");
+		
         /* The event group was not created because there was insufficient
         FreeRTOS heap available. */
     }
     else
     {
+		printf("Data Ready group good\n");
         /* The event group was created. */
     }
 }

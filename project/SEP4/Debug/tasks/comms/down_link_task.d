@@ -22,7 +22,8 @@ tasks/comms/down_link_task.d tasks/comms/down_link_task.o: \
  ../FreeRTOS/src/ATMEGA_FreeRTOS.h ../FreeRTOS/src/task.h \
  ../FreeRTOS/src/list.h ../FreeRTOS/src/task.h ../FreeRTOS/src/semphr.h \
  ../FreeRTOS/src/queue.h ../drivers/stdio_driver.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
+ ../drivers/serial.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -83,3 +84,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../drivers/stdio_driver.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
+
+../drivers/serial.h:

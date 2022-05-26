@@ -12,8 +12,10 @@
 #include <semphr.h>
 
 #include <stdio_driver.h>
+#include <serial.h>
 
 void init_task_uplink(){
+	printf("[UPLINK] Uplink init\n");
 	
 }
  
@@ -26,7 +28,7 @@ void upLinkTask(void *pvParameters)
 	for( ;; )
 	{
 		
-		puts("UpLInk");
+		puts("UpLInk\n");
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 	}
 }

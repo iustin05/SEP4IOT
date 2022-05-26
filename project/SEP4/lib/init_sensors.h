@@ -9,7 +9,7 @@
 #ifndef INIT_SENSORS_H_
 #define INIT_SENSORS_H_
 
-extern void initSensorsAndEvents(void);
+extern void initSensorsAndEvents();
 
 
 

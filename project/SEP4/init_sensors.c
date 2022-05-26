@@ -12,6 +12,8 @@
 #include <semphr.h>
 
 #include <stdio_driver.h>
+#include <serial.h>
+
 #include <hih8120.h>
 #include <mh_z19.h>
 #include <tsl2591.h>
@@ -19,13 +21,6 @@
 
 #include <sensors_callback.h>
 
-void initSensorsAndEvents(void){
-	puts("Starting initiating sensors and events...");
-	initEventGroups();
-	setLuxCallback();
-	setCO2Callback();
-	initTempHum();
-	initServo();
-	initMessageBuffers();
-
+void initSensorsAndEvents(){
+	
 }

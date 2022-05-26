@@ -12,6 +12,7 @@
 #include <semphr.h>
 
 #include <stdio_driver.h>
+#include <serial.h>
 
  void init_task(){
  
@@ -25,6 +26,7 @@ void downLinkTask(void *pvParameters)
 	xLastWakeTime = xTaskGetTickCount();
 	for( ;; )
 	{
+		puts("DOWNLINK\n");
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 	}
 }

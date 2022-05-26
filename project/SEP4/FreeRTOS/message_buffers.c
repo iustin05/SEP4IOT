@@ -12,13 +12,23 @@
 #include <semphr.h>
 
 #include <stdio_driver.h>
+#include <serial.h>
 
 #include <message_buffer.h>
 
 MessageBufferHandle_t upLinkMessageBuffer;
 MessageBufferHandle_t downLinkMessageBuffer;
 
+MessageBufferHandle_t getUpLinkMessageBuffer(){
+	return upLinkMessageBuffer;
+}
+
+MessageBufferHandle_t getDownLinkMessageBuffer(){
+	return downLinkMessageBuffer;
+}
+
 void initMessageBuffers(){
+	puts("[Message Buffer]: Allocating buffers...\n");
 	upLinkMessageBuffer = xMessageBufferCreate( 10 );
 	downLinkMessageBuffer = xMessageBufferCreate( 4 );
 }

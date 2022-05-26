@@ -23,7 +23,7 @@ tasks/servo/servo_task.d tasks/servo/servo_task.o: \
  ../FreeRTOS/src/list.h ../FreeRTOS/src/task.h ../FreeRTOS/src/semphr.h \
  ../FreeRTOS/src/queue.h ../drivers/stdio_driver.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../lib/configuration.h ../drivers/rc_servo.h
+ ../drivers/serial.h ../lib/configuration.h ../drivers/rc_servo.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -84,6 +84,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../drivers/stdio_driver.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
+
+../drivers/serial.h:
 
 ../lib/configuration.h:
 

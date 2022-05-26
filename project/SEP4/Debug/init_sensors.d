@@ -22,7 +22,7 @@ init_sensors.d init_sensors.o: .././init_sensors.c \
  ../FreeRTOS/src/list.h ../FreeRTOS/src/task.h ../FreeRTOS/src/semphr.h \
  ../FreeRTOS/src/queue.h ../drivers/stdio_driver.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../drivers/hih8120.h ../drivers/mh_z19.h ../drivers/serial.h \
+ ../drivers/serial.h ../drivers/hih8120.h ../drivers/mh_z19.h \
  ../drivers/tsl2591.h ../drivers/rc_servo.h ../lib/sensors_callback.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
@@ -85,11 +85,11 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
 
+../drivers/serial.h:
+
 ../drivers/hih8120.h:
 
 ../drivers/mh_z19.h:
-
-../drivers/serial.h:
 
 ../drivers/tsl2591.h:
 

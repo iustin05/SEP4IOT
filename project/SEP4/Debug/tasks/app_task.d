@@ -20,9 +20,10 @@ tasks/app_task.d tasks/app_task.o: ../tasks/app_task.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h \
  ../FreeRTOS/src/ATMEGA_FreeRTOS.h ../FreeRTOS/src/task.h \
  ../FreeRTOS/src/list.h ../FreeRTOS/src/task.h ../FreeRTOS/src/semphr.h \
- ../FreeRTOS/src/queue.h ../drivers/stdio_driver.h \
+ ../FreeRTOS/src/queue.h ../lib/init_sensors.h ../drivers/stdio_driver.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../lib/packer.h ../lib/xevent_groups.h ../FreeRTOS/src/event_groups.h \
+ ../lib/packer.h ../drivers/status_leds.h ../drivers/serial.h \
+ ../lib/xevent_groups.h ../FreeRTOS/src/event_groups.h \
  ../FreeRTOS/src/timers.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
@@ -81,11 +82,17 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../FreeRTOS/src/queue.h:
 
+../lib/init_sensors.h:
+
 ../drivers/stdio_driver.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
 
 ../lib/packer.h:
+
+../drivers/status_leds.h:
+
+../drivers/serial.h:
 
 ../lib/xevent_groups.h:
 
