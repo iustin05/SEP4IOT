@@ -17,6 +17,9 @@
 
 #include <xevent_groups.h>
 
+#include <comm_queue.h>
+
+
 uint16_t last_temp;
 uint16_t last_hum;
 
@@ -47,6 +50,7 @@ void tempHumTask(void *pvParameters)
 {
 	EventBits_t eventBits;
 	TickType_t xLastWakeTime;
+	qPacketType_t sensorPacket;
 	const TickType_t xFrequency = 2000/portTICK_PERIOD_MS;
 	xLastWakeTime = xTaskGetTickCount();
 	for(;;){
@@ -63,8 +67,15 @@ void tempHumTask(void *pvParameters)
 			}
 			vTaskDelay(20); // Delay for TWI
 			last_temp = hih8120_getTemperature_x10();
+			sensorPacket.type = PACKET_TYPE_TMP;
+			sensorPacket.value = last_temp;
+			sendCommQueue(sensorPacket);
+			vTaskDelay(50);
 			last_hum = hih8120_getHumidity();
-			
+			sensorPacket.type = PACKET_TYPE_HUM;
+			sensorPacket.value = last_hum;
+			sendCommQueue(sensorPacket);
+			vTaskDelay(50);
 			printf("T: %d H: %d\n", last_temp, last_hum);
 		}
 	}

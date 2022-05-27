@@ -23,6 +23,8 @@
 
 #include <sensors_callback.h>
 
+#include <comm_queue.h>
+
 void createTasks()
 {
 	xTaskCreate(
@@ -96,6 +98,7 @@ void initMain()
 	setLuxCallback();
 	setCO2Callback();
 	createTasks();
+	createQueue();
 }
 
 int main(void){

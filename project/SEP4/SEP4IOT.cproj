@@ -148,6 +148,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="comm_queue.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="configuration.c">
       <SubType>compile</SubType>
     </Compile>
@@ -209,6 +212,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="lib\app_tasks.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\comm_queue.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="lib\configuration.h">

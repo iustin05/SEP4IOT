@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+comm_queue.c
+
 configuration.c
 
 event_groups.c

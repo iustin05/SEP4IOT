@@ -16,16 +16,20 @@
 
 #include <xevent_groups.h>
 
+#include <comm_queue.h>
+
+
 uint16_t last_lux;
+short ready = 0;
 
 void tsl2591Callback(tsl2591_returnCode_t rc){
 	float _lux;
 	if(rc == TSL2591_DATA_READY){
 		tsl2591_getLux(&_lux);
-		printf("Lux: %d\n", _lux);
+		printf("Lux: %d\n", (int) _lux);
 	}
 	last_lux = _lux;
-	
+	ready = 1;
 }
 
 void setLuxCallback(){
@@ -48,10 +52,12 @@ void luxTask(void *pvParameters)
 	init_task_lux();
 	EventBits_t eventBits;
 	TickType_t xLastWakeTime;
+	qPacketType_t sensorPacket;
 	const TickType_t xFrequency = 2000/portTICK_PERIOD_MS;
 	xLastWakeTime = xTaskGetTickCount();
 	for( ;; )
 	{
+		ready = 0;
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 		eventBits = xEventGroupWaitBits(getMeasureEventGroup(),
 		BIT_MEASURE_LUX,
@@ -70,5 +76,11 @@ void luxTask(void *pvParameters)
 				// The light data will be ready after the driver calls the call back function with TSL2591_DATA_READY.
 			}
 		}
+		while(!ready){
+			vTaskDelay(50);
+		}
+		sensorPacket.type = PACKET_TYPE_LUX;
+		sensorPacket.value = last_lux;
+		sendCommQueue(sensorPacket);
 	}
 }

@@ -17,11 +17,15 @@
 #include <stdio_driver.h>
 #include <mh_z19.h>
 
+#include <comm_queue.h>
+
 uint16_t last_ppm;
 mh_z19_returnCode_t rc;
+short ready;
 
 void mh_z19CallBack(uint16_t ppm){
 	last_ppm = ppm;
+	ready = 1;
 }
 
 void setCO2Callback() {
@@ -34,9 +38,11 @@ void CO2Task(void *pvParameters)
 {
 	EventBits_t eventBits;
 	TickType_t xLastWakeTime;
+	qPacketType_t sensorPacket;
 	const TickType_t xFrequency = 2000/portTICK_PERIOD_MS;
 	xLastWakeTime = xTaskGetTickCount();
 	for(;;){
+		ready = 0;
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 		eventBits = xEventGroupWaitBits(getMeasureEventGroup(),
 		BIT_MEASURE_CO2,
@@ -50,6 +56,13 @@ void CO2Task(void *pvParameters)
 			{
 				puts("E CO2 Failed\n");
 			}
+			while(!ready){
+				vTaskDelay(50);
+			}
+			sensorPacket.type = PACKET_TYPE_CO2;
+			sensorPacket.value = last_ppm;
+			sendCommQueue(sensorPacket);
+			vTaskDelay(50);
 			printf("CO2: %d\n", last_ppm);
 		} else {
 			printf("W CO2 Timeout\n");

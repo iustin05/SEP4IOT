@@ -41,6 +41,6 @@ void upLinkTask(void *pvParameters)
 		{
 			puts("UpLink\n");
 		}
-		vTaskDelay(10000);
+		printf("test\n");
 	}
 }

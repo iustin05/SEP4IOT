@@ -23,6 +23,12 @@
 
 #include <xevent_groups.h>
 
+#include <comm_queue.h>
+
+#include <packer.h>
+
+#define xFrequency (20000 / portTICK_PERIOD_MS)
+
 void initLED()
 {
 	// Initiating the LEDs
@@ -34,12 +40,9 @@ void appTask(void *pvParameters)
 {
 	EventBits_t uxBits;
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 20000 / portTICK_PERIOD_MS;
 	xLastWakeTime = xTaskGetTickCount();
+	qPacketType_t recievePacket;
 	const TickType_t xTicksToWait = 1000 / portTICK_PERIOD_MS;
-	size_t xBytesSent;
-	uint8_t ucArrayToSend[] = { 0, 1, 2, 3 };
-	const TickType_t x100ms = pdMS_TO_TICKS( 100 );
     for( ;; )
     {
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
@@ -77,6 +80,41 @@ void appTask(void *pvParameters)
 			puts("LUX measured\n");
 		}
 		puts("APP All measuring completed\n");
+		
+		do{
+			recievePacket = receiveCommQueue();
+			//printf("%d, %d\n", recievePacket.type, recievePacket.value);
+			vTaskDelay(100);
+			if(recievePacket.type == PACKET_TYPE_NULL) break;
+			switch(recievePacket.type){
+				case PACKET_TYPE_CO2: {
+					g_co2 = recievePacket.value;
+					printf("co2 rcv\n");
+					break;
+				}
+				case PACKET_TYPE_HUM: {
+					g_hum = recievePacket.value;
+					printf("hum rcv\n");
+					break;
+				}
+				case PACKET_TYPE_LUX: {
+					g_lux = recievePacket.value;
+					printf("lux rcv\n");
+					break;
+				}
+				case PACKET_TYPE_TMP: {
+					g_temp = recievePacket.value;
+					printf("temp rcv\n");
+					break;
+				}
+				default: {
+					printf("pRCV err\n");
+					break;
+				}
+			}
+		} while(recievePacket.type != PACKET_TYPE_NULL);
+		
+		printf("APP received queues done\n");
 		
 		
     }
