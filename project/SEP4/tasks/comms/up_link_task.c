@@ -40,7 +40,7 @@ void upLinkTask(void *pvParameters)
 			puts("UpLink START\n");
 			// printf("H: 0x%08x 0x%08x\n", upLinkPayload.bytes[0], upLinkPayload.bytes[1]);
 			vTaskDelay(50);
-			// lora_driver_sendUploadMessage(false, ucRxData);
+			printf("Upload Message > %s <\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &upLinkPayload)));
 		}
 	}
 }

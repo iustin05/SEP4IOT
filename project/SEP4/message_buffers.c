@@ -30,7 +30,7 @@ MessageBufferHandle_t getDownLinkMessageBuffer(){
 
 void initMessageBuffers(){
 	upLinkMessageBuffer = xMessageBufferCreate( sizeof(getSendReadyPayload()) + sizeof(size_t) );
-	//downLinkMessageBuffer = xMessageBufferCreate( 4 );
+	downLinkMessageBuffer = xMessageBufferCreate( sizeof(lora_driver_payload_t) + sizeof(size_t) );
 	
 	if(upLinkMessageBuffer==NULL){
 		puts("Buffer failed\n");

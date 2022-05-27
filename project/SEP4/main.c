@@ -25,6 +25,11 @@
 
 #include <comm_queue.h>
 
+#include <message_buffer.h>
+#include <message_buffers.h>
+
+#include <lora_driver.h>
+
 void createTasks()
 {
 	xTaskCreate(
@@ -38,7 +43,7 @@ void createTasks()
 	xTaskCreate(
 	CO2Task
 	,  "CO2Task"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE+75  // This stack size can be checked & adjusted by reading the Stack Highwater
+	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
 	,  NULL
 	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
@@ -46,7 +51,7 @@ void createTasks()
 	xTaskCreate(
 	tempHumTask
 	,  "TempHumTask"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE+75  // This stack size can be checked & adjusted by reading the Stack Highwater
+	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
 	,  NULL
 	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
@@ -54,7 +59,7 @@ void createTasks()
 	xTaskCreate(
 	luxTask
 	,  "LuxTask"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE+75  // This stack size can be checked & adjusted by reading the Stack Highwater
+	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
 	,  NULL
 	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
@@ -62,7 +67,7 @@ void createTasks()
 	xTaskCreate(
 	servoTask
 	,  "ServoTask"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE+75  // This stack size can be checked & adjusted by reading the Stack Highwater
+	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
 	,  NULL
 	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
@@ -70,18 +75,18 @@ void createTasks()
 	xTaskCreate(
 	upLinkTask
 	,  "UpLinkTask"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE+75  // This stack size can be checked & adjusted by reading the Stack Highwater
+	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
 	,  NULL
 	,  2  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
 	
-	/*xTaskCreate(
+	xTaskCreate(
 	downLinkTask
 	,  "DownLinkTask"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE+75  // This stack size can be checked & adjusted by reading the Stack Highwater
+	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
 	,  NULL
 	,  2  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-	,  NULL );*/
+	,  NULL );
 	
 }
 
@@ -99,6 +104,8 @@ void initMain()
 	setCO2Callback();
 	createTasks();
 	createQueue();
+	lora_driver_initialise(1, getDownLinkMessageBuffer());
+	printf("LoraWAN OK\n");
 }
 
 int main(void){

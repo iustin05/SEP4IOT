@@ -6,6 +6,8 @@ comm_queue.c
 
 configuration.c
 
+connect_lwan.c
+
 event_groups.c
 
 init_sensors.c

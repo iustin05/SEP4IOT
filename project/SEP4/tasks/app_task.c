@@ -27,6 +27,8 @@
 
 #include <packer.h>
 
+#include <connect_lwan.h>
+
 #define xFrequency (20000 / portTICK_PERIOD_MS)
 
 void initLED()
@@ -37,11 +39,12 @@ void initLED()
 }
 
 void connectWAN(){
-	// TODO CONNECT TO LORAWAN
+	initLORAWAN();
 }
 
 void appTask(void *pvParameters)
 {
+	connectWAN();
 	EventBits_t uxBits;
 	TickType_t xLastWakeTime;
 	xLastWakeTime = xTaskGetTickCount();
@@ -129,7 +132,6 @@ void appTask(void *pvParameters)
 		{
 			printf("upbuffer - no heap space\n");
 		}
-		
 		
     }
 }
