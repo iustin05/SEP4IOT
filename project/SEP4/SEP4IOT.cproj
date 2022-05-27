@@ -205,9 +205,6 @@
     <Compile Include="event_groups.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="FreeRTOS\message_buffers.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="init_sensors.c">
       <SubType>compile</SubType>
     </Compile>
@@ -230,9 +227,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="lib\sensors_callback.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="lib\xmessage_buffers.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">

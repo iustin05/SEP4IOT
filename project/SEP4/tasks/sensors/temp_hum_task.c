@@ -31,7 +31,7 @@ uint16_t getHum(){
 void initTempHum(){
 	if ( HIH8120_OK == hih8120_initialise() )
 	{
-		puts("TEMP/HUM SENSOR INITIALIZED\n");
+		
 	}
 	
 	if ( HIH8120_OK != hih8120_wakeup() )
@@ -41,33 +41,31 @@ void initTempHum(){
 		// Something went wrong
 		// Investigate the return code further
 	}
-	puts("TEMP/HUM SENSOR WAKE UP COMPLETE\n");
 }
 
 void tempHumTask(void *pvParameters)
 {
 	EventBits_t eventBits;
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 2000/portTICK_PERIOD_MS;
+	xLastWakeTime = xTaskGetTickCount();
 	for(;;){
+		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 		eventBits = xEventGroupWaitBits(getMeasureEventGroup(),
 		BIT_MEASURE_HUM_TEMP,
 		pdTRUE,
 		pdTRUE,
 		10000/portTICK_PERIOD_MS);
 		if(eventBits & BIT_MEASURE_HUM_TEMP){
-			vTaskDelay(500);
-			printf("[HUM/TEMP] Measure request received.\nTaking measurement...\n");
+			printf("T/H measuring...\n");
 			if ( HIH8120_OK !=  hih8120_measure() ){
-				puts("[E][TEMP/HUM] SENSOR MEASURE WRONG\n");
+				puts("T/H measure wrong!\n");
 			}
-			vTaskDelay(10); // Delay for TWI
+			vTaskDelay(20); // Delay for TWI
 			last_temp = hih8120_getTemperature_x10();
 			last_hum = hih8120_getHumidity();
 			
-			printf("[HUM/TEMP] Results T: %d H: %d\n", last_temp, last_hum);
-			
-			printf("[HUM/TEMP] Going to sleep for interval.\n");
-		} else {
-			printf("[W][HUM/TEMP] Measure listener timed out. Taking no measurement...\n");
+			printf("T: %d H: %d\n", last_temp, last_hum);
 		}
 	}
 }

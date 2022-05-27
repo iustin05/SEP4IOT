@@ -6,8 +6,6 @@ configuration.c
 
 event_groups.c
 
-FreeRTOS\message_buffers.c
-
 init_sensors.c
 
 main.c

@@ -23,8 +23,9 @@ tasks/app_task.d tasks/app_task.o: ../tasks/app_task.c \
  ../FreeRTOS/src/queue.h ../lib/init_sensors.h ../drivers/stdio_driver.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../lib/packer.h ../drivers/status_leds.h ../drivers/serial.h \
- ../lib/xevent_groups.h ../FreeRTOS/src/event_groups.h \
- ../FreeRTOS/src/timers.h
+ ../FreeRTOS/src/message_buffer.h ../FreeRTOS/src/stream_buffer.h \
+ ../lib/message_buffers.h ../lib/xevent_groups.h \
+ ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -93,6 +94,12 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 ../drivers/status_leds.h:
 
 ../drivers/serial.h:
+
+../FreeRTOS/src/message_buffer.h:
+
+../FreeRTOS/src/stream_buffer.h:
+
+../lib/message_buffers.h:
 
 ../lib/xevent_groups.h:
 

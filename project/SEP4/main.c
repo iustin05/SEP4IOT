@@ -15,8 +15,6 @@
 #include <stdio_driver.h>
 #include <serial.h>
 
-#include <util/delay.h>
-
 #include <app_tasks.h>
 
 #include <status_leds.h>
@@ -24,7 +22,6 @@
 #include <xevent_groups.h>
 
 #include <sensors_callback.h>
-#include <rc_servo.h>
 
 void createTasks()
 {
@@ -65,7 +62,7 @@ void createTasks()
 	,  "ServoTask"  // A name just for humans
 	,  configMINIMAL_STACK_SIZE+75  // This stack size can be checked & adjusted by reading the Stack Highwater
 	,  NULL
-	,  0  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
+	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
 	
 	xTaskCreate(
@@ -76,47 +73,37 @@ void createTasks()
 	,  2  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
 	
-	xTaskCreate(
+	/*xTaskCreate(
 	downLinkTask
 	,  "DownLinkTask"  // A name just for humans
 	,  configMINIMAL_STACK_SIZE+75  // This stack size can be checked & adjusted by reading the Stack Highwater
 	,  NULL
 	,  2  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-	,  NULL );
+	,  NULL );*/
 	
 }
 
 void initMain()
 {
 	stdio_initialise(ser_USART0);
-	sei();
-	puts("--------BOOTING--------\n");
 	DDRA |= _BV(DDA0) | _BV(DDA7);
 	status_leds_initialise(5);
-	
-	initEventGroups();
-	//_delay_ms(2000);
-	rc_servo_initialise();
-	rc_servo_setPosition(1,100);
-	setLuxCallback();
-	//_delay_ms(2000);
-	
-	setCO2Callback();
-	
-	initTempHum();
-	rc_servo_setPosition(1,-100);
-	
+	initConfiguration();
 	initServo();
+	initEventGroups();
+	initTempHum();
 	initMessageBuffers();
+	setLuxCallback();
+	setCO2Callback();
+	createTasks();
 }
 
 int main(void){
 	initMain();
-	
-	createTasks();
+	printf("BOOT OK\n");
 	vTaskStartScheduler();
 	
 	while(1){
-		
+		printf("Error");
 	}
 }

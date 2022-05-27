@@ -29,8 +29,8 @@ int16_t getServoAngle(void){
 void initConfiguration(){
 	configMutex = xSemaphoreCreateMutex();
 	if(configMutex != NULL){
-		printf("Configuration Mutex created!");
+		printf("Mutex ok\n");
 	} else {
-		printf("Failed to create Configuration Mutex!");
+		printf("Mutex failed!\n");
 	}
 }

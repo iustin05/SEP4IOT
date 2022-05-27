@@ -21,25 +21,37 @@
 #define SERVO_J13 1
 #define SERVO_J14 0
 
-int16_t last_angle = 70;
+int8_t last_angle;
 
 void initServo(){
 	rc_servo_initialise();
 }
  
+void performBasicSetting(){
+	for(int i = -100; i<=100 ; i++){
+		rc_servo_setPosition(SERVO_J13,i);
+		vTaskDelay(1);
+	}
+	for(int i = -100; i<=100 ; i++){
+		rc_servo_setPosition(SERVO_J13,i*(-1));
+		vTaskDelay(1);
+	}
+	rc_servo_setPosition(SERVO_J13,0);
+}
+
 void servoTask(void *pvParameters)
 {
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 10000/portTICK_PERIOD_MS;
-	xLastWakeTime = xTaskGetTickCount();
-	int16_t current_angle;
+	//DEBUG performBasicSetting();
+	int8_t current_angle;
 	for( ;; )
 	{
+		//xTaskDelayUntil( &xLastWakeTime, xFrequency );
+		vTaskDelay(60000/portTICK_PERIOD_MS);
 		if( configMutex != NULL )
 		{
 			/* See if we can obtain the semaphore.  If the semaphore is not
 			available wait 10 ticks to see if it becomes free. */
-			if( xSemaphoreTake( configMutex, ( TickType_t ) 1000 ) == pdTRUE )
+			if( xSemaphoreTake( configMutex, ( TickType_t ) 10 ) == pdTRUE )
 			{
 				/* We were able to obtain the semaphore and can now access the
 				shared resource. */
@@ -47,18 +59,16 @@ void servoTask(void *pvParameters)
 				/* ... */
 				
 				current_angle = getServoAngle();
-
 				/* We have finished accessing the shared resource.  Release the
 				semaphore. */
 				xSemaphoreGive( configMutex );
 				
-				printf("Servo angle received from configuration\n");
-				
 				if(current_angle == last_angle){
-					printf("Servo angle unchanged.\n");
+					
 				} else {
-					printf("Servo angle changed; correcting angle...");
+					printf("Servo changed; correcting angle\n");
 					rc_servo_setPosition(SERVO_J13, current_angle);
+					last_angle = current_angle;
 				}
 				
 			}
@@ -69,6 +79,5 @@ void servoTask(void *pvParameters)
 				the shared resource safely. */
 			}
 		}
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 	}
 }

@@ -16,6 +16,7 @@
 
 #include <stdio_driver.h>
 #include <mh_z19.h>
+
 uint16_t last_ppm;
 mh_z19_returnCode_t rc;
 
@@ -24,34 +25,34 @@ void mh_z19CallBack(uint16_t ppm){
 }
 
 void setCO2Callback() {
-	puts("CALLBACKS SET");
+	puts("CO2 OK");
 	mh_z19_initialise(ser_USART3); 
 	mh_z19_injectCallBack(mh_z19CallBack);
 }
  
 void CO2Task(void *pvParameters)
 {
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 14300/portTICK_PERIOD_MS;
-	xLastWakeTime = xTaskGetTickCount();
 	EventBits_t eventBits;
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 2000/portTICK_PERIOD_MS;
+	xLastWakeTime = xTaskGetTickCount();
 	for(;;){
+		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 		eventBits = xEventGroupWaitBits(getMeasureEventGroup(),
 		BIT_MEASURE_CO2,
 		pdTRUE,
 		pdTRUE,
-		10000/portTICK_PERIOD_MS);
+		20000/portTICK_PERIOD_MS);
 		if(eventBits & BIT_MEASURE_CO2){
-			vTaskDelay(1000);
-			printf("[CO2] Measure request received.\nTaking measurement...\n");
+			printf("CO2 Measuring...\n");
 			rc = mh_z19_takeMeassuring();
 			if (rc != MHZ19_OK)
 			{
-				puts("[E][CO2] CO2 Measurement failed.\n");
+				puts("E CO2 Failed\n");
 			}
 			printf("CO2: %d\n", last_ppm);
 		} else {
-			printf("[W][CO2] Measure listener timed out. Taking no measurement...\n");
+			printf("W CO2 Timeout\n");
 		}
 	}
 }

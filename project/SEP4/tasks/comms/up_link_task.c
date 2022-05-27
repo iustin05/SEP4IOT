@@ -13,9 +13,11 @@
 
 #include <stdio_driver.h>
 #include <serial.h>
+#include <message_buffer.h>
+#include <message_buffers.h>
 
 void init_task_uplink(){
-	printf("[UPLINK] Uplink init\n");
+	printf("Uplink init\n");
 	
 }
  
@@ -23,12 +25,22 @@ void upLinkTask(void *pvParameters)
 {
 	init_task_uplink();
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = pdMS_TO_TICKS(10000UL); // Upload message every 5 minutes (300000 ms)
+	const TickType_t xFrequency = 2000/portTICK_PERIOD_MS;
 	xLastWakeTime = xTaskGetTickCount();
+	uint8_t ucRxData[ 4 ];
+	size_t xReceivedBytes;
+	const TickType_t xBlockTime = pdMS_TO_TICKS( 10000 );
 	for( ;; )
 	{
-		
-		puts("UpLInk\n");
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
+		xReceivedBytes = xMessageBufferReceive( getUpLinkMessageBuffer(),
+		( void * ) ucRxData,
+		sizeof( ucRxData ),
+		xBlockTime );
+		if( xReceivedBytes > 0 )
+		{
+			puts("UpLink\n");
+		}
+		vTaskDelay(10000);
 	}
 }

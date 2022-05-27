@@ -19,60 +19,13 @@
 uint16_t last_lux;
 
 void tsl2591Callback(tsl2591_returnCode_t rc){
-	uint16_t _tmp;
 	float _lux;
-	switch (rc)
-	{
-		case TSL2591_DATA_READY:
-		if ( TSL2591_OK == (rc = tsl2591_getFullSpectrumRaw(&_tmp)) )
-		{
-			//printf("\nFull Raw:%04X\n", _tmp);
-		}
-		else if( TSL2591_OVERFLOW == rc )
-		{
-			printf("\nFull spectrum overflow - change gain and integration time\n");
-		}
-		
-		if ( TSL2591_OK == (rc = tsl259_getVisibleRaw(&_tmp)) )
-		{
-			//printf("Visible Raw:%04X\n", _tmp);
-		}
-		else if( TSL2591_OVERFLOW == rc )
-		{
-			printf("Visible overflow - change gain and integration time\n");
-		}
-		
-		if ( TSL2591_OK == (rc = tsl2591_getInfraredRaw(&_tmp)) )
-		{
-			//printf("Infrared Raw:%04X\n", _tmp);
-		}
-		else if( TSL2591_OVERFLOW == rc )
-		{
-			printf("Infrared overflow - change gain and integration time\n");
-		}
-		
-		if ( TSL2591_OK == (rc = tsl2591_getLux(&_lux)) )
-		{
-			last_lux = (int)(_lux * 10);
-		}
-		else if( TSL2591_OVERFLOW == rc )
-		{
-			printf("Lux overflow - change gain and integration time\n");
-		}
-		break;
-		
-		case TSL2591_OK:
-			
-		break;
-		
-		case TSL2591_DEV_ID_READY:
-		
-		break;
-		
-		default:
-		break;
+	if(rc == TSL2591_DATA_READY){
+		tsl2591_getLux(&_lux);
+		printf("Lux: %d\n", _lux);
 	}
-	printf("[LUX] Result: %d", last_lux);
+	last_lux = _lux;
+	
 }
 
 void setLuxCallback(){
@@ -93,21 +46,20 @@ void init_task_lux(){
 void luxTask(void *pvParameters)
 {
 	init_task_lux();
-	printf("[LUX] Lux init");
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 21000/portTICK_PERIOD_MS;
-	xLastWakeTime = xTaskGetTickCount();
 	EventBits_t eventBits;
+	TickType_t xLastWakeTime;
+	const TickType_t xFrequency = 2000/portTICK_PERIOD_MS;
+	xLastWakeTime = xTaskGetTickCount();
 	for( ;; )
 	{
+		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 		eventBits = xEventGroupWaitBits(getMeasureEventGroup(),
 		BIT_MEASURE_LUX,
 		pdTRUE,
 		pdTRUE,
 		20000/portTICK_PERIOD_MS);
 		if(eventBits & BIT_MEASURE_LUX){
-			vTaskDelay(2000);
-			printf("[LUX] Measure request received.\nTaking measurement...\n");
+			printf("Lux measure\n");
 			if ( TSL2591_OK != tsl2591_fetchData() )
 			{
 				// Something went wrong
@@ -117,10 +69,6 @@ void luxTask(void *pvParameters)
 			{
 				// The light data will be ready after the driver calls the call back function with TSL2591_DATA_READY.
 			}
-		} else {
-			printf("[W][LUX] Measure listener timed out. Not taking measurement...\n");
 		}
-		
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 	}
 }

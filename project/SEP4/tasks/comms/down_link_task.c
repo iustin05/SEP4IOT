@@ -20,13 +20,18 @@
  
 void downLinkTask(void *pvParameters)
 {
+	
 	init_task();
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = pdMS_TO_TICKS(10000UL); // Upload message every 5 minutes (300000 ms)
+	const TickType_t xFrequency = 2000/portTICK_PERIOD_MS;
 	xLastWakeTime = xTaskGetTickCount();
 	for( ;; )
 	{
-		puts("DOWNLINK\n");
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
+		puts("Downloading\n");
 	}
+}
+
+void downLink(){
+	
 }
