@@ -15,6 +15,7 @@
 #include <serial.h>
 
 #include <message_buffer.h>
+#include <packer.h>
 
 MessageBufferHandle_t upLinkMessageBuffer;
 MessageBufferHandle_t downLinkMessageBuffer;
@@ -28,7 +29,12 @@ MessageBufferHandle_t getDownLinkMessageBuffer(){
 }
 
 void initMessageBuffers(){
-	puts("Buffer OK\n");
-	upLinkMessageBuffer = xMessageBufferCreate( 10 );
-	downLinkMessageBuffer = xMessageBufferCreate( 4 );
+	upLinkMessageBuffer = xMessageBufferCreate( sizeof(getSendReadyPayload()) + sizeof(size_t) );
+	//downLinkMessageBuffer = xMessageBufferCreate( 4 );
+	
+	if(upLinkMessageBuffer==NULL){
+		puts("Buffer failed\n");
+	} else {
+		puts("Buffer OK\n");
+	}
 }

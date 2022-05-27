@@ -16,31 +16,31 @@
 #include <message_buffer.h>
 #include <message_buffers.h>
 
+#include <lora_driver.h>
+
 void init_task_uplink(){
-	printf("Uplink init\n");
+	printf("Uplink OK\n");
 	
 }
  
 void upLinkTask(void *pvParameters)
 {
 	init_task_uplink();
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 2000/portTICK_PERIOD_MS;
-	xLastWakeTime = xTaskGetTickCount();
-	uint8_t ucRxData[ 4 ];
+	lora_driver_payload_t upLinkPayload;
 	size_t xReceivedBytes;
-	const TickType_t xBlockTime = pdMS_TO_TICKS( 10000 );
 	for( ;; )
 	{
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
+		vTaskDelay(1000/portTICK_PERIOD_MS);
 		xReceivedBytes = xMessageBufferReceive( getUpLinkMessageBuffer(),
-		( void * ) ucRxData,
-		sizeof( ucRxData ),
-		xBlockTime );
-		if( xReceivedBytes > 0 )
+		&upLinkPayload,
+		sizeof( lora_driver_payload_t ),
+		10000/portTICK_PERIOD_MS);
+		if( xReceivedBytes == sizeof(lora_driver_payload_t) )
 		{
-			puts("UpLink\n");
+			puts("UpLink START\n");
+			// printf("H: 0x%08x 0x%08x\n", upLinkPayload.bytes[0], upLinkPayload.bytes[1]);
+			vTaskDelay(50);
+			// lora_driver_sendUploadMessage(false, ucRxData);
 		}
-		printf("test\n");
 	}
 }

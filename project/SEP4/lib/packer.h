@@ -18,6 +18,7 @@ int8_t g_co2;
 
 lora_driver_payload_t loraPayload;
 
+lora_driver_payload_t getSendReadyPayload();
 
 
 #endif /* PACKER_H_ */

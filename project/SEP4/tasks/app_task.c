@@ -36,12 +36,17 @@ void initLED()
 	status_leds_initialise(5);
 }
 
+void connectWAN(){
+	// TODO CONNECT TO LORAWAN
+}
+
 void appTask(void *pvParameters)
 {
 	EventBits_t uxBits;
 	TickType_t xLastWakeTime;
 	xLastWakeTime = xTaskGetTickCount();
 	qPacketType_t recievePacket;
+	lora_driver_payload_t upLinkPayload;
 	const TickType_t xTicksToWait = 1000 / portTICK_PERIOD_MS;
     for( ;; )
     {
@@ -115,6 +120,15 @@ void appTask(void *pvParameters)
 		} while(recievePacket.type != PACKET_TYPE_NULL);
 		
 		printf("APP received queues done\n");
+		
+		upLinkPayload = getSendReadyPayload();
+		
+		size_t xBytesSent;
+		xBytesSent = xMessageBufferSend(getUpLinkMessageBuffer(), &upLinkPayload, sizeof(upLinkPayload), 100);
+		if( xBytesSent != sizeof( upLinkPayload ) )
+		{
+			printf("upbuffer - no heap space\n");
+		}
 		
 		
     }

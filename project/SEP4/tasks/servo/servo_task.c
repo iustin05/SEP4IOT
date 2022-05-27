@@ -46,7 +46,7 @@ void servoTask(void *pvParameters)
 	for( ;; )
 	{
 		//xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		vTaskDelay(60000/portTICK_PERIOD_MS);
+		vTaskDelay(10000/portTICK_PERIOD_MS);
 		if( configMutex != NULL )
 		{
 			/* See if we can obtain the semaphore.  If the semaphore is not

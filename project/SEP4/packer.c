@@ -42,6 +42,19 @@ void setCO2(int8_t co2){
 
 lora_driver_payload_t getSendReadyPayload(){
 	
+	loraPayload.len = 8;
+	loraPayload.portNo = 2;
+	
+	loraPayload.bytes[0] = g_hum >> 8;
+	loraPayload.bytes[1] = g_hum & 0xFF;
+	loraPayload.bytes[2] = g_temp >> 8;
+	loraPayload.bytes[3] = g_temp & 0xFF;
+	loraPayload.bytes[4] = g_co2 >> 8;
+	loraPayload.bytes[5] = g_co2 & 0xFF;
+	loraPayload.bytes[6] = g_lux >> 8;
+	loraPayload.bytes[7] = g_lux & 0xFF;
+	
+	return loraPayload; 
 }
 
 
