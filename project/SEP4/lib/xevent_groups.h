@@ -25,6 +25,8 @@ extern void initEventGroups();
 
 extern EventGroupHandle_t getMeasureEventGroup();
 extern EventGroupHandle_t getDataReadyEventGroup();
+extern EventGroupHandle_t getNumbersEventGroup();
+
 
 
 #endif /* XEVENT_GROUPS_H_ */

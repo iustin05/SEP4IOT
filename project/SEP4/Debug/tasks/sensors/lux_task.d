@@ -25,7 +25,8 @@ tasks/sensors/lux_task.d tasks/sensors/lux_task.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../drivers/tsl2591.h ../lib/xevent_groups.h \
  ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h \
- ../lib/comm_queue.h
+ ../drivers/display_7seg.h ../lib/comm_queue.h \
+ ../lib/leds_numbers_tasks.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -95,4 +96,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../FreeRTOS/src/timers.h:
 
+../drivers/display_7seg.h:
+
 ../lib/comm_queue.h:
+
+../lib/leds_numbers_tasks.h:

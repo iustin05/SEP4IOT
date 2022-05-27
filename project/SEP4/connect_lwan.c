@@ -14,8 +14,12 @@
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
 
+#include <program_config.h>
+
 #include <lora_driver.h>
 #include <lora_driver_utils.h>
+
+#include <leds_numbers_tasks.h>
 
 #include <status_leds.h>
 
@@ -23,14 +27,17 @@
 #define LORA_appKEY "5F83717BC67B4646E3F00DC5EC3417DC"
 
 void initLORAWAN() {
-	char hweui[20];
+	#ifdef NONETWORK
+	printf("NONETWORK\n");
+	#endif // NONETWORK
 	
+	#ifndef NONETWORK
+	char hweui[20];
 	lora_driver_resetRn2483(1);
 	vTaskDelay(2);
 	lora_driver_resetRn2483(0);
 	vTaskDelay(150);
 	lora_driver_flushBuffers();
-	
 	
 	lora_driver_rn2483FactoryReset();
 	lora_driver_configureToEu868();
@@ -64,14 +71,16 @@ void initLORAWAN() {
 		// Connected to LoRaWAN :-)
 		// Make the green led steady
 		status_leds_ledOn(led_ST2); // OPTIONAL
+		ledON(LED_ONLINE);
 	}
 	else
 	{
 		// Something went wrong
 		// Turn off the green led
 		status_leds_ledOff(led_ST2); // OPTIONAL
+		ledOFF(LED_ONLINE);
 		// Make the red led blink fast to tell something went wrong
-		status_leds_fastBlink(led_ST3); // OPTIONAL
+		status_leds_fastBlink(led_ST1); // OPTIONAL
 
 		// Lets stay here
 		while (1)
@@ -79,4 +88,5 @@ void initLORAWAN() {
 			taskYIELD();
 		}
 	}
+	#endif
 }

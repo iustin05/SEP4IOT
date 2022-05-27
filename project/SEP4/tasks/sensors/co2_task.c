@@ -17,6 +17,8 @@
 #include <stdio_driver.h>
 #include <mh_z19.h>
 
+#include <leds_numbers_tasks.h>
+
 #include <comm_queue.h>
 
 uint16_t last_ppm;
@@ -49,6 +51,8 @@ void CO2Task(void *pvParameters)
 		pdTRUE,
 		pdTRUE,
 		20000/portTICK_PERIOD_MS);
+		ledON(LED_CO2_TASK);
+		display_7seg_displayHex("C02");
 		if(eventBits & BIT_MEASURE_CO2){
 			printf("CO2 Measuring...\n");
 			rc = mh_z19_takeMeassuring();
@@ -66,6 +70,8 @@ void CO2Task(void *pvParameters)
 			printf("CO2: %d\n", last_ppm);
 		} else {
 			printf("W CO2 Timeout\n");
+			vTaskDelay(4000 / portTICK_PERIOD_MS);
 		}
+		ledOFF(LED_CO2_TASK);
 	}
 }

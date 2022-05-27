@@ -25,7 +25,7 @@ tasks/sensors/temp_hum_task.d tasks/sensors/temp_hum_task.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../drivers/serial.h ../drivers/hih8120.h ../lib/xevent_groups.h \
  ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h \
- ../lib/comm_queue.h
+ ../lib/leds_numbers_tasks.h ../lib/comm_queue.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -96,5 +96,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 ../FreeRTOS/src/event_groups.h:
 
 ../FreeRTOS/src/timers.h:
+
+../lib/leds_numbers_tasks.h:
 
 ../lib/comm_queue.h:

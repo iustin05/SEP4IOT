@@ -25,7 +25,8 @@ tasks/sensors/co2_task.d tasks/sensors/co2_task.o: \
  ../FreeRTOS/src/timers.h ../lib/xevent_groups.h \
  ../drivers/stdio_driver.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../drivers/mh_z19.h ../drivers/serial.h ../lib/comm_queue.h
+ ../drivers/mh_z19.h ../drivers/serial.h ../lib/leds_numbers_tasks.h \
+ ../lib/comm_queue.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -96,5 +97,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 ../drivers/mh_z19.h:
 
 ../drivers/serial.h:
+
+../lib/leds_numbers_tasks.h:
 
 ../lib/comm_queue.h:

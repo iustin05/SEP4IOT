@@ -26,7 +26,8 @@ tasks/app_task.d tasks/app_task.o: ../tasks/app_task.c \
  ../FreeRTOS/src/message_buffer.h ../FreeRTOS/src/stream_buffer.h \
  ../drivers/serial.h ../drivers/status_leds.h ../lib/message_buffers.h \
  ../lib/xevent_groups.h ../FreeRTOS/src/event_groups.h \
- ../FreeRTOS/src/timers.h ../lib/comm_queue.h ../lib/connect_lwan.h
+ ../FreeRTOS/src/timers.h ../lib/comm_queue.h ../lib/connect_lwan.h \
+ ../lib/leds_numbers_tasks.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -113,3 +114,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 ../lib/comm_queue.h:
 
 ../lib/connect_lwan.h:
+
+../lib/leds_numbers_tasks.h:

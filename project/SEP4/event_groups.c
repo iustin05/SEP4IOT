@@ -27,9 +27,14 @@
 
 EventGroupHandle_t dataReadyEventGroup;
 EventGroupHandle_t measureEventGroup;
+EventGroupHandle_t numbersEventGroup;
 
 EventGroupHandle_t getMeasureEventGroup(){
 	return measureEventGroup;
+}
+
+EventGroupHandle_t getNumbersEventGroup(){
+	return numbersEventGroup;
 }
 
 EventGroupHandle_t getDataReadyEventGroup(){
@@ -51,6 +56,22 @@ void initEventGroups(){
     else
     {
 		printf("Measure group good\n");
+        /* The event group was created. */
+    }
+
+	/* Attempt to create the event group. */
+    numbersEventGroup = xEventGroupCreate();
+
+    /* Was the event group created successfully? */
+    if( numbersEventGroup == NULL )
+    {
+		printf("Not enough memory.");
+        /* The event group was not created because there was insufficient
+        FreeRTOS heap available. */
+    }
+    else
+    {
+		printf("Num gr OK\n");
         /* The event group was created. */
     }
 

@@ -29,7 +29,9 @@
 
 #include <connect_lwan.h>
 
-#define xFrequency (20000 / portTICK_PERIOD_MS)
+#include <leds_numbers_tasks.h>
+
+#define xFrequency (40000 / portTICK_PERIOD_MS)
 
 void initLED()
 {
@@ -51,9 +53,12 @@ void appTask(void *pvParameters)
 	qPacketType_t recievePacket;
 	lora_driver_payload_t upLinkPayload;
 	const TickType_t xTicksToWait = 1000 / portTICK_PERIOD_MS;
+	display_7seg_displayHex("57AB7");
     for( ;; )
     {
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
+		ledON(LED_APP_TASK_WORK);
+		ledON(LED_APP_TASK);
 		puts("APP Start CO2...\n");
 		xEventGroupSetBits(getMeasureEventGroup(), BIT_MEASURE_CO2);
 		uxBits = xEventGroupWaitBits(
@@ -123,6 +128,7 @@ void appTask(void *pvParameters)
 		} while(recievePacket.type != PACKET_TYPE_NULL);
 		
 		printf("APP received queues done\n");
+		ledOFF(LED_APP_TASK_WORK);
 		
 		upLinkPayload = getSendReadyPayload();
 		
@@ -133,6 +139,7 @@ void appTask(void *pvParameters)
 			printf("upbuffer - no heap space\n");
 		}
 		
+		ledOFF(LED_APP_TASK);
     }
 }
 

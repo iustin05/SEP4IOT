@@ -16,8 +16,10 @@
 
 #include <xevent_groups.h>
 
-#include <comm_queue.h>
+#include <display_7seg.h>
 
+#include <comm_queue.h>
+#include <leds_numbers_tasks.h>
 
 uint16_t last_lux;
 short ready = 0;
@@ -64,6 +66,8 @@ void luxTask(void *pvParameters)
 		pdTRUE,
 		pdTRUE,
 		20000/portTICK_PERIOD_MS);
+		ledON(LED_LUX_TASK);
+		display_7seg_displayHex("1UX ");
 		if(eventBits & BIT_MEASURE_LUX){
 			printf("Lux measure\n");
 			if ( TSL2591_OK != tsl2591_fetchData() )
@@ -82,5 +86,6 @@ void luxTask(void *pvParameters)
 		sensorPacket.type = PACKET_TYPE_LUX;
 		sensorPacket.value = last_lux;
 		sendCommQueue(sensorPacket);
+		ledOFF(LED_LUX_TASK);
 	}
 }

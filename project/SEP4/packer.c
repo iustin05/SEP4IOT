@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <avr/io.h>
+#include <string.h>
 
 #include <stdio_driver.h>
 #include <serial.h>

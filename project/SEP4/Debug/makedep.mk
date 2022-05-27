@@ -12,7 +12,11 @@ event_groups.c
 
 init_sensors.c
 
+leds_numbers_task.c
+
 main.c
+
+main_leds.c
 
 message_buffers.c
 

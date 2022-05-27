@@ -16,6 +16,10 @@
 
 #include <configuration.h>
 
+#include <leds_numbers_tasks.h>
+
+#include <display_7seg.h>
+
 #include <rc_servo.h>
 
 #define SERVO_J13 1
@@ -46,7 +50,9 @@ void servoTask(void *pvParameters)
 	for( ;; )
 	{
 		//xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		vTaskDelay(10000/portTICK_PERIOD_MS);
+		vTaskDelay(5000/portTICK_PERIOD_MS);
+		ledON(LED_SERVO);
+		display_7seg_displayHex("5E");
 		if( configMutex != NULL )
 		{
 			/* See if we can obtain the semaphore.  If the semaphore is not
@@ -69,6 +75,9 @@ void servoTask(void *pvParameters)
 					printf("Servo changed; correcting angle\n");
 					rc_servo_setPosition(SERVO_J13, current_angle);
 					last_angle = current_angle;
+					char str[4];
+					sprintf(str, "%d", current_angle);
+					display_7seg_displayHex(str);
 				}
 				
 			}
@@ -79,5 +88,7 @@ void servoTask(void *pvParameters)
 				the shared resource safely. */
 			}
 		}
+		vTaskDelay(5000/portTICK_PERIOD_MS);
+		ledOFF(LED_SERVO);
 	}
 }

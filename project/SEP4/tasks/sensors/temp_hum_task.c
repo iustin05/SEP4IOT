@@ -17,6 +17,8 @@
 
 #include <xevent_groups.h>
 
+#include <leds_numbers_tasks.h>
+
 #include <comm_queue.h>
 
 
@@ -60,6 +62,8 @@ void tempHumTask(void *pvParameters)
 		pdTRUE,
 		pdTRUE,
 		10000/portTICK_PERIOD_MS);
+		ledON(LED_THF_TASK);
+		display_7seg_displayHex("F 7");
 		if(eventBits & BIT_MEASURE_HUM_TEMP){
 			printf("T/H measuring...\n");
 			if ( HIH8120_OK !=  hih8120_measure() ){
@@ -78,5 +82,6 @@ void tempHumTask(void *pvParameters)
 			vTaskDelay(50);
 			printf("T: %d H: %d\n", last_temp, last_hum);
 		}
+		ledOFF(LED_THF_TASK);
 	}
 }

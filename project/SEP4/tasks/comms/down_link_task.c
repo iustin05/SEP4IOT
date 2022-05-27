@@ -11,12 +11,16 @@
 #include <task.h>
 #include <semphr.h>
 
+#include <program_config.h>
+
 #include <stdio_driver.h>
 #include <serial.h>
 
 #include <lora_driver.h>
 #include <message_buffer.h>
 #include <message_buffers.h>
+
+#include <status_leds.h>
 
 #include <configuration.h>
 
@@ -37,11 +41,13 @@ void downLinkTask(void *pvParameters)
 	size_t xReceivedBytes;
 	for( ;; )
 	{
-		vTaskDelay(1000/portTICK_PERIOD_MS);
+		//printf("DL Check\n");
 		xReceivedBytes = xMessageBufferReceive( getDownLinkMessageBuffer(),
 		&downLinkPayload,
 		sizeof( lora_driver_payload_t ),
 		10000/portTICK_PERIOD_MS);
+		status_leds_fastBlink(led_ST4);
+		status_leds_longPuls(led_ST2);
 		if( xReceivedBytes == sizeof(lora_driver_payload_t) )
 		{
 			puts("Downloading...\n");
@@ -76,6 +82,8 @@ void downLinkTask(void *pvParameters)
 			}
 			newConfig = CLEAR;
 		}
+		status_leds_ledOff(led_ST4);
+		status_leds_ledOn(led_ST2);
 	}
 }
 

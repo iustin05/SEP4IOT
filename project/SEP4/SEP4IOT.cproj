@@ -214,6 +214,9 @@
     <Compile Include="init_sensors.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="leds_numbers_task.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="lib\app_tasks.h">
       <SubType>compile</SubType>
     </Compile>
@@ -224,6 +227,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="lib\connect_lwan.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\leds_numbers_tasks.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\program_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="lib\xevent_groups.h">
@@ -242,6 +251,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="main_leds.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="message_buffers.c">
