@@ -25,7 +25,7 @@
 #define PENDING 1
 #define CLEAR 0
 
-int8_t last_cfg;
+int16_t last_cfg;
 short newConfig;
 
 void init_task(){
@@ -44,6 +44,7 @@ void downLinkTask(void *pvParameters)
 		&downLinkPayload,
 		sizeof( lora_driver_payload_t ),
 		SETTING_TIMEOUT_DOWNLINK/portTICK_PERIOD_MS);
+		taskENTER_CRITICAL();
 		if( xReceivedBytes == sizeof(lora_driver_payload_t) )
 		{
 			status_leds_fastBlink(led_ST4);
@@ -53,10 +54,11 @@ void downLinkTask(void *pvParameters)
 			last_cfg = downLinkPayload.bytes[0];
 			newConfig = PENDING; // trigger write into configuration
 			#ifdef DEBUG_EXTRA_DATA
+			printf("%d", downLinkPayload.len);
 			for(int i = 0; i<downLinkPayload.len; i++){
 				printf("%d\n", downLinkPayload.bytes[i]);
 			}
-			printf("DL val : %d\n", last_cfg);
+			printf("DL val : %d\n", (int) last_cfg);
 			#endif
 		}
 		if(newConfig == PENDING){
@@ -64,7 +66,7 @@ void downLinkTask(void *pvParameters)
 			{
 				if( xSemaphoreTake( configMutex, ( TickType_t ) 500 ) == pdTRUE )
 				{
-					setServoAngle(last_cfg-100);
+					setServoAngle((int)last_cfg - 100);
 					xSemaphoreGive( configMutex );
 					#ifdef DEBUG_EXTRA_DATA
 					printf("DL - new servo value fetched\n");
@@ -77,6 +79,7 @@ void downLinkTask(void *pvParameters)
 					pdFALSE,
 					1000 / portTICK_PERIOD_MS);
 					vTaskDelay(1000/portTICK_PERIOD_MS);
+					display_7seg_displayHex("C100");
 					status_leds_ledOff(led_ST4);
 					status_leds_ledOn(led_ST2);
 				}
@@ -90,6 +93,8 @@ void downLinkTask(void *pvParameters)
 				}
 			}
 			newConfig = CLEAR;
+			display_7seg_displayHex("9001");
 		}
+		taskEXIT_CRITICAL();
 	}
 }

@@ -43,25 +43,23 @@ void performBasicSetting(){
 
 void servoTask(void *pvParameters)
 {
-	EventBits_t eventBits;
 	//DEBUG performBasicSetting();
 	int8_t current_angle;
 	for( ;; )
 	{
-		eventBits = xEventGroupWaitBits(getMeasureEventGroup(),
+		xEventGroupWaitBits(getMeasureEventGroup(),
 		BIT_SERVO,
 		pdTRUE,
 		pdTRUE,
-		SETTING_TIMEOUT_CO2/portTICK_PERIOD_MS);
+		20000/portTICK_PERIOD_MS);
 		// xTaskDelayUntil( &xLastWakeTime, xFrequency );
 		// vTaskDelay(SETTING_CYCLE_SERVO/portTICK_PERIOD_MS);
 		ledON(LED_SERVO);
-		if(eventBits & BIT_SERVO){
 		if( configMutex != NULL )
 		{
 			/* See if we can obtain the semaphore.  If the semaphore is not
 			available wait 10 ticks to see if it becomes free. */
-			if( xSemaphoreTake( configMutex, ( TickType_t ) 1000 ) == pdTRUE )
+			if( xSemaphoreTake( configMutex, ( TickType_t ) 10 ) == pdTRUE )
 			{
 				/* We were able to obtain the semaphore and can now access the
 				shared resource. */
@@ -73,19 +71,19 @@ void servoTask(void *pvParameters)
 				semaphore. */
 				xSemaphoreGive( configMutex );
 				vTaskDelay(10);
-				/*if(current_angle == last_angle){
+				if(current_angle == last_angle){
 					
 				} else {
 					printf("Servo changed; correcting angle\n");
 					rc_servo_setPosition(SERVO_J13, current_angle);
 					last_angle = current_angle;
-					char str[4];
-					sprintf(str, "%d\n", current_angle);
+					char str[3];
+					sprintf(str, "%d", current_angle);
 					display_7seg_displayHex(str);
-				}*/
-					printf("Servo changed; correcting angle\n");
-					rc_servo_setPosition(SERVO_J13, current_angle);
-					last_angle = current_angle;
+				}
+					//printf("Servo changed; correcting angle\n");
+					//rc_servo_setPosition(SERVO_J13, current_angle);
+					//last_angle = current_angle;
 					//char str[4];
 					//sprintf(str, "%d\n", current_angle);
 					//display_7seg_displayHex(str);
@@ -102,4 +100,3 @@ void servoTask(void *pvParameters)
 		ledOFF(LED_SERVO);
 		}
 }
-		}

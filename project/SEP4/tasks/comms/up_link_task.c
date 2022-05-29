@@ -25,6 +25,7 @@ void init_task_uplink(){
 void upLinkTask(void *pvParameters)
 {
 	init_task_uplink();
+	
 	lora_driver_payload_t upLinkPayload;
 	size_t xReceivedBytes;
 	for( ;; )
