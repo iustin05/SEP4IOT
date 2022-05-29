@@ -4,18 +4,13 @@
  * Created: 5/26/2022 12:16:18 PM
  *  Author: nordesk
  */ 
-#include <stdio.h>
-#include <avr/io.h>
+#include <iot_io.h>
 
 #include <ATMEGA_FreeRTOS.h>
-#include <task.h>
-#include <semphr.h>
-
-#include <stdio_driver.h>
-#include <serial.h>
 
 #include <message_buffer.h>
-#include <packer.h>
+
+#include <lora_driver.h>
 
 MessageBufferHandle_t upLinkMessageBuffer;
 MessageBufferHandle_t downLinkMessageBuffer;
@@ -29,12 +24,12 @@ MessageBufferHandle_t getDownLinkMessageBuffer(){
 }
 
 void initMessageBuffers(){
-	upLinkMessageBuffer = xMessageBufferCreate( sizeof(getSendReadyPayload()) + sizeof(size_t) );
+	upLinkMessageBuffer = xMessageBufferCreate( sizeof(lora_driver_payload_t) + sizeof(size_t) );
 	downLinkMessageBuffer = xMessageBufferCreate( sizeof(lora_driver_payload_t) + sizeof(size_t) );
 	
 	if(upLinkMessageBuffer==NULL){
-		puts("Buffer failed\n");
+		printf("uBuffer failed\n");
 	} else {
-		puts("Buffer OK\n");
+		printf("uBuff OK\n");
 	}
 }

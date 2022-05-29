@@ -1,12 +1,7 @@
-#include <stdio.h>
-#include <avr/io.h>
+#include <iot_io.h>
 
 #include <ATMEGA_FreeRTOS.h>
-#include <task.h>
 #include <semphr.h>
-
-#include <stdio_driver.h>
-#include <serial.h>
 
 /*
  * configuration.c
@@ -29,7 +24,7 @@ int16_t getServoAngle(void){
 void initConfiguration(){
 	configMutex = xSemaphoreCreateMutex();
 	if(configMutex != NULL){
-		printf("Mutex ok\n");
+		printf("Mutex OK\n");
 	} else {
 		printf("Mutex failed!\n");
 	}

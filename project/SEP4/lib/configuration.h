@@ -9,6 +9,8 @@
 #ifndef CONFIGURATION_H_
 #define CONFIGURATION_H_
 
+#include <semphr.h>
+
 SemaphoreHandle_t configMutex;
 
 extern void setServoAngle(int16_t angle);

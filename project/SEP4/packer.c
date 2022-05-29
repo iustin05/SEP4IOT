@@ -4,19 +4,13 @@
  * Created: 5/26/2022 1:09:37 AM
  *  Author: nordesk
  */ 
+#include <iot_io.h>
 
-#include <stdio.h>
-#include <avr/io.h>
 #include <string.h>
 
-#include <stdio_driver.h>
-#include <serial.h>
-
 #include <ATMEGA_FreeRTOS.h>
-#include <task.h>
 
 #include <lora_driver.h>
-#include <lora_driver_utils.h>
 
 int8_t g_temp;
 int8_t g_lux;

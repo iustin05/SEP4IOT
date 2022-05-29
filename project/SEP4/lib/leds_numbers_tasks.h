@@ -24,18 +24,18 @@
 #define BIT_LED_LUX_TASK (1<<5)
 #define BIT_LED_ERROR (1<<7)
 
-void initLEDs();
+extern void initLEDsAndDisplay();
 
-void ledOFF(short _led);
+extern void ledOFF(short _led);
 
-void ledON(short _led);
+extern void ledON(short _led);
 
-void ledToggle(short _led);
+extern void ledToggle(short _led);
 
-void ledsAndNumbersTask(void *pvParameters);
+extern void ledsAndNumbersTask(void *pvParameters);
 
-void ledBlinkShort(short _led);
+extern void ledBlinkShort(short _led);
 
-void ledBlinkFast(short _led);
+extern void ledBlinkFast(short _led);
 
 #endif /* LEDS_NUMBERS_TASKS_H_ */

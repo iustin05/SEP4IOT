@@ -1,18 +1,17 @@
 /*
  * main.c
  *
+ * IMPORTANT!
+ * To configure the program, visit "lib/program_config.h"
+ *
  * Created: 5/26/2022 12:44:07 AM
  *  Author: nordesk
  */ 
-#include <stdio.h>
-#include <avr/io.h>
-#include <avr/interrupt.h>
+#include <iot_io.h>
 
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
-#include <semphr.h>
 
-#include <stdio_driver.h>
 #include <serial.h>
 
 #include <app_tasks.h>
@@ -27,7 +26,6 @@
 
 #include <comm_queue.h>
 
-#include <message_buffer.h>
 #include <message_buffers.h>
 
 #include <lora_driver.h>
@@ -99,18 +97,23 @@ void createTasks()
 	,  "LEDsAndNumbers"  // A name just for humans
 	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
 	,  NULL
-	,  3  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
+	,  2  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
 	
 }
 
-void initMain()
+void initLEDsAndDisplay()
 {
 	stdio_initialise(ser_USART0);
 	DDRA |= _BV(DDA1) | _BV(DDA2) | _BV(DDA3) | _BV(DDA4) | _BV(DDA5) | _BV(DDA6) | _BV(DDA7) | _BV(DDA0);
 	status_leds_initialise(5);
 	display_7seg_initialise(NULL);
 	display_7seg_powerUp();
+}
+
+void initMain()
+{
+	initLEDsAndDisplay();
 	initConfiguration();
 	initServo();
 	initEventGroups();
@@ -120,15 +123,14 @@ void initMain()
 	setCO2Callback();
 	createTasks();
 	createQueue();
-	#ifndef NONETWORK
+	#ifndef DEBUG_NONETWORK
 	lora_driver_initialise(1, getDownLinkMessageBuffer());
-	printf("LoraWAN OK\n");
+	printf("Lora OK\n");
 	#endif
 }
 
 int main(void){
 	initMain();
-	printf("BOOT OK\n");
 	vTaskStartScheduler();
 	
 	while(1){

@@ -9,8 +9,6 @@
 #ifndef CONNECT_LWAN_H_
 #define CONNECT_LWAN_H_
 
-void initLORAWAN();
-
-
+extern void initLORAWAN();
 
 #endif /* CONNECT_LWAN_H_ */

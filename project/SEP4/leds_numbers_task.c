@@ -5,18 +5,12 @@
  *  Author: nordesk
  */ 
 
-#include <stdio.h>
-#include <avr/io.h>
-
-#include <stdio_driver.h>
-#include <serial.h>
+#include <iot_io.h>
 
 #include <ATMEGA_FreeRTOS.h>
-#include <task.h>
 #include <xevent_groups.h>
 
-#include <lora_driver.h>
-#include <lora_driver_utils.h>
+#include <program_config.h>
 
 
 #define LED_POWER LED_501
@@ -53,7 +47,11 @@ void initLEDs()
 		}
 		_LED_STATUS[0] = 1;
 		xEventGroupSetBits(getNumbersEventGroup(), BIT_LED(1) | BIT_LED(2) | BIT_LED(3) | BIT_LED(4) | BIT_LED(5) | BIT_LED(6) | BIT_LED(7) );
-		printf("M.LEDs OK\n");
+		printf("LED OK\n");
+}
+
+void triggerEvent(short bit_led){
+	xEventGroupSetBits(getNumbersEventGroup(), BIT_LED(bit_led));
 }
 
 void ledOFF(short _led){
@@ -73,10 +71,6 @@ void ledToggle(short _led){
 		_LED_STATUS[_led] = 1;	
 	}
 	triggerEvent(_led);
-}
-
-void triggerEvent(short bit_led){
-	xEventGroupSetBits(getNumbersEventGroup(), BIT_LED(bit_led));
 }
 
 void ledBlinkShort(short _led){
@@ -133,7 +127,7 @@ void ledsAndNumbersTask(void *pvParameters){
 		(1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7),
 		pdTRUE,
 		pdFALSE,
-		20000/portTICK_PERIOD_MS);
+		SETTING_TIMEOUT_WAIT_LED_BITS/portTICK_PERIOD_MS);
 		if(eventBits & (1 << 1)){
 			i = 1;
 			_check(i);

@@ -9,6 +9,8 @@
 #ifndef MESSAGE_BUFFERS_H_
 #define MESSAGE_BUFFERS_H_
 
+#include <message_buffer.h>
+
 extern MessageBufferHandle_t getUpLinkMessageBuffer();
 extern MessageBufferHandle_t getDownLinkMessageBuffer();
 

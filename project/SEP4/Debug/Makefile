@@ -52,10 +52,8 @@ C_SRCS +=  \
 ../configuration.c \
 ../connect_lwan.c \
 ../event_groups.c \
-../init_sensors.c \
 ../leds_numbers_task.c \
 ../main.c \
-../main_leds.c \
 ../message_buffers.c \
 ../packer.c \
 ../tasks/app_task.c \
@@ -89,10 +87,8 @@ comm_queue.o \
 configuration.o \
 connect_lwan.o \
 event_groups.o \
-init_sensors.o \
 leds_numbers_task.o \
 main.o \
-main_leds.o \
 message_buffers.o \
 packer.o \
 tasks/app_task.o \
@@ -119,10 +115,8 @@ comm_queue.o \
 configuration.o \
 connect_lwan.o \
 event_groups.o \
-init_sensors.o \
 leds_numbers_task.o \
 main.o \
-main_leds.o \
 message_buffers.o \
 packer.o \
 tasks/app_task.o \
@@ -149,10 +143,8 @@ comm_queue.d \
 configuration.d \
 connect_lwan.d \
 event_groups.d \
-init_sensors.d \
 leds_numbers_task.d \
 main.d \
-main_leds.d \
 message_buffers.d \
 packer.d \
 tasks/app_task.d \
@@ -179,10 +171,8 @@ comm_queue.d \
 configuration.d \
 connect_lwan.d \
 event_groups.d \
-init_sensors.d \
 leds_numbers_task.d \
 main.d \
-main_leds.d \
 message_buffers.d \
 packer.d \
 tasks/app_task.d \
@@ -246,13 +236,6 @@ LINKER_SCRIPT_DEP+=
 	@echo Finished building: $<
 	
 
-./init_sensors.o: .././init_sensors.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\include" -I"../drivers" -I"../FreeRTOS/src" -I"../lib"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
 ./leds_numbers_task.o: .././leds_numbers_task.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
@@ -261,13 +244,6 @@ LINKER_SCRIPT_DEP+=
 	
 
 ./main.o: .././main.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\include" -I"../drivers" -I"../FreeRTOS/src" -I"../lib"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-./main_leds.o: .././main_leds.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\include" -I"../drivers" -I"../FreeRTOS/src" -I"../lib"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

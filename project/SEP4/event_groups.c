@@ -4,16 +4,10 @@
  * Created: 5/26/2022 9:14:43 AM
  *  Author: nordesk
  */ 
-#include <stdio.h>
-#include <avr/io.h>
+#include <iot_io.h>
 
 #include <ATMEGA_FreeRTOS.h>
-#include <task.h>
-#include <semphr.h>
 #include <event_groups.h>
-
-#include <stdio_driver.h>
-#include <serial.h>
 
 #define BIT_MEASURE_CO2	( 1 << 0 ) // BIT 0
 #define BIT_MEASURE_HUM_TEMP ( 1 << 1 ) // BIT 1
@@ -55,7 +49,7 @@ void initEventGroups(){
     }
     else
     {
-		printf("Measure group good\n");
+		printf("Measure e.group OK\n");
         /* The event group was created. */
     }
 
@@ -71,7 +65,7 @@ void initEventGroups(){
     }
     else
     {
-		printf("Num gr OK\n");
+		printf("Num e.group OK\n");
         /* The event group was created. */
     }
 
@@ -88,7 +82,7 @@ void initEventGroups(){
     }
     else
     {
-		printf("Data Ready group good\n");
+		printf("Data e.group OK\n");
         /* The event group was created. */
     }
 }

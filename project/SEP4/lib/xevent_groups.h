@@ -14,6 +14,7 @@
 #define BIT_MEASURE_CO2	( 1 << 0 ) // BIT 0
 #define BIT_MEASURE_HUM_TEMP ( 1 << 1 ) // BIT 1
 #define BIT_MEASURE_LUX ( 1 << 2 ) // BIT 2
+#define BIT_SERVO (1 << 3) // BIT 3
 #define BIT_MEASURE_ALL (BIT_MEASURE_CO2 | BIT_MEASURE_HUM_TEMP | BIT_MEASURE_LUX)
 
 #define BIT_READY_CO2 ( 1 << 0 ) // BIT 0

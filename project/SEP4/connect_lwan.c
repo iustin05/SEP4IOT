@@ -5,33 +5,30 @@
  *  Author: nordesk
  */ 
 
-#include <stdio.h>
-#include <avr/io.h>
+#include <iot_io.h>
 
-#include <stdio_driver.h>
-#include <serial.h>
+#include <stdlib.h>
 
 #include <ATMEGA_FreeRTOS.h>
-#include <task.h>
 
 #include <program_config.h>
 
 #include <lora_driver.h>
-#include <lora_driver_utils.h>
 
 #include <leds_numbers_tasks.h>
 
+#include <display_7seg.h>
+
 #include <status_leds.h>
 
-#define LORA_appEUI "2BBE8F09765BBF4B"
-#define LORA_appKEY "5F83717BC67B4646E3F00DC5EC3417DC"
+
 
 void initLORAWAN() {
-	#ifdef NONETWORK
+	#ifdef DEBUG_NONETWORK
 	printf("NONETWORK\n");
-	#endif // NONETWORK
+	#endif // DEBUG_NONETWORK
 	
-	#ifndef NONETWORK
+	#ifndef DEBUG_NONETWORK
 	char hweui[20];
 	lora_driver_resetRn2483(1);
 	vTaskDelay(2);
@@ -43,16 +40,21 @@ void initLORAWAN() {
 	lora_driver_configureToEu868();
 	lora_driver_getRn2483Hweui(hweui);
 	lora_driver_setDeviceIdentifier(hweui);
-	lora_driver_setOtaaIdentity(LORA_appEUI,LORA_appKEY,hweui);
+	lora_driver_setOtaaIdentity(SETTING_LORA_APPEUI,SETTING_LORA_APPKEY,hweui);
 	lora_driver_saveMac();
 	lora_driver_setAdaptiveDataRate(LORA_ON);
-	lora_driver_setReceiveDelay(500);
-	uint8_t maxJoinTriesLeft = 10;
+	lora_driver_setReceiveDelay(SETTING_LORA_RECEIVEDELAY);
+	uint8_t maxJoinTriesLeft = SETTING_LORA_MAXJOINTRIES;
 	lora_driver_returnCode_t rc;
+	status_leds_slowBlink(led_ST3);
 	do {
+		char* str = malloc( 2 );
+		snprintf( str, 2, "%d", maxJoinTriesLeft);
+		display_7seg_displayHex(str);
+		free(str);
 		rc = lora_driver_join(LORA_OTAA);
 		printf("Join Nwrk Try Left: %d > %s <\n", maxJoinTriesLeft, lora_driver_mapReturnCodeToText(rc));
-
+		
 		if ( rc != LORA_ACCEPTED)
 		{
 			// Make the red led pulse to tell something went wrong
@@ -70,7 +72,9 @@ void initLORAWAN() {
 	{
 		// Connected to LoRaWAN :-)
 		// Make the green led steady
+		display_7seg_displayHex("9000");
 		status_leds_ledOn(led_ST2); // OPTIONAL
+		status_leds_ledOff(led_ST1);
 		ledON(LED_ONLINE);
 	}
 	else
@@ -78,9 +82,10 @@ void initLORAWAN() {
 		// Something went wrong
 		// Turn off the green led
 		status_leds_ledOff(led_ST2); // OPTIONAL
-		ledOFF(LED_ONLINE);
+		display_7seg_displayErr();
 		// Make the red led blink fast to tell something went wrong
 		status_leds_fastBlink(led_ST1); // OPTIONAL
+		status_leds_ledOff(led_ST3);
 
 		// Lets stay here
 		while (1)
@@ -88,5 +93,6 @@ void initLORAWAN() {
 			taskYIELD();
 		}
 	}
-	#endif
+	status_leds_ledOff(led_ST3);
+	#endif // DEBUG_NONETWORK
 }

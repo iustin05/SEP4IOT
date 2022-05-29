@@ -16,5 +16,4 @@ extern void initConfiguration();
 extern void initMessageBuffers();
 
 
-
 #endif /* SENSORS_CALLBACK_H_ */

@@ -4,14 +4,9 @@
  * Created: 5/27/2022 10:21:13 AM
  *  Author: nordesk
  */ 
-#include <stdio.h>
-#include <avr/io.h>
-
-#include <stdio_driver.h>
-#include <serial.h>
+#include <iot_io.h>
 
 #include <ATMEGA_FreeRTOS.h>
-#include <task.h>
 #include <queue.h>
 
 #define PACKET_TYPE_CO2 1
@@ -31,7 +26,7 @@ typedef struct qPacketType{
 void createQueue(){
 	commQUE = xQueueCreate( 4, sizeof( qPacketType_t ) );
 	if(commQUE != 0){
-		printf("QUEUE OK\n");
+		printf("QUE OK\n");
 	}
 }
 
@@ -40,7 +35,7 @@ void sendCommQueue(qPacketType_t queuePacket){
 	( void * ) &queuePacket,
 	( TickType_t ) 10 ) != pdPASS )
 	{
-		printf("QUEUE sent\n");
+		printf("QUE sent\n");
 	}
 }
 

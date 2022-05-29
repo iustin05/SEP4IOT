@@ -4,17 +4,15 @@
  * Created: 5/26/2022 1:54:54 AM
  *  Author: nordesk
  */
-#include <stdio.h>
-#include <avr/io.h>
+#include <iot_io.h>
 
 #include <ATMEGA_FreeRTOS.h>
-#include <task.h>
-#include <semphr.h>
 
-#include <stdio_driver.h>
-#include <serial.h>
+#include <xevent_groups.h>
 
 #include <configuration.h>
+
+#include <program_config.h>
 
 #include <leds_numbers_tasks.h>
 
@@ -45,19 +43,25 @@ void performBasicSetting(){
 
 void servoTask(void *pvParameters)
 {
+	EventBits_t eventBits;
 	//DEBUG performBasicSetting();
 	int8_t current_angle;
 	for( ;; )
 	{
-		//xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		vTaskDelay(5000/portTICK_PERIOD_MS);
+		eventBits = xEventGroupWaitBits(getMeasureEventGroup(),
+		BIT_SERVO,
+		pdTRUE,
+		pdTRUE,
+		SETTING_TIMEOUT_CO2/portTICK_PERIOD_MS);
+		// xTaskDelayUntil( &xLastWakeTime, xFrequency );
+		// vTaskDelay(SETTING_CYCLE_SERVO/portTICK_PERIOD_MS);
 		ledON(LED_SERVO);
-		display_7seg_displayHex("5E");
+		if(eventBits & BIT_SERVO){
 		if( configMutex != NULL )
 		{
 			/* See if we can obtain the semaphore.  If the semaphore is not
 			available wait 10 ticks to see if it becomes free. */
-			if( xSemaphoreTake( configMutex, ( TickType_t ) 10 ) == pdTRUE )
+			if( xSemaphoreTake( configMutex, ( TickType_t ) 1000 ) == pdTRUE )
 			{
 				/* We were able to obtain the semaphore and can now access the
 				shared resource. */
@@ -68,17 +72,23 @@ void servoTask(void *pvParameters)
 				/* We have finished accessing the shared resource.  Release the
 				semaphore. */
 				xSemaphoreGive( configMutex );
-				
-				if(current_angle == last_angle){
+				vTaskDelay(10);
+				/*if(current_angle == last_angle){
 					
 				} else {
 					printf("Servo changed; correcting angle\n");
 					rc_servo_setPosition(SERVO_J13, current_angle);
 					last_angle = current_angle;
 					char str[4];
-					sprintf(str, "%d", current_angle);
+					sprintf(str, "%d\n", current_angle);
 					display_7seg_displayHex(str);
-				}
+				}*/
+					printf("Servo changed; correcting angle\n");
+					rc_servo_setPosition(SERVO_J13, current_angle);
+					last_angle = current_angle;
+					//char str[4];
+					//sprintf(str, "%d\n", current_angle);
+					//display_7seg_displayHex(str);
 				
 			}
 			else
@@ -88,7 +98,8 @@ void servoTask(void *pvParameters)
 				the shared resource safely. */
 			}
 		}
-		vTaskDelay(5000/portTICK_PERIOD_MS);
+		vTaskDelay(100/portTICK_PERIOD_MS);
 		ledOFF(LED_SERVO);
-	}
+		}
 }
+		}
