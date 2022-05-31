@@ -33,7 +33,7 @@ void createQueue(){
 void sendCommQueue(qPacketType_t queuePacket){
 	if(xQueueSend( commQUE,
 	( void * ) &queuePacket,
-	( TickType_t ) 10 ) != pdPASS )
+	( TickType_t ) 100 ) != pdPASS )
 	{
 		printf("QUE sent\n");
 	}

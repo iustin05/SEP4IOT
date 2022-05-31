@@ -12,10 +12,10 @@
 
 #include <lora_driver.h>
 
-int8_t g_temp;
-int8_t g_lux;
-int8_t g_hum;
-int8_t g_co2;
+int16_t g_temp;
+int16_t g_lux;
+int16_t g_hum;
+int16_t g_co2;
 
 lora_driver_payload_t loraPayload;
 
@@ -23,7 +23,7 @@ void setTEMP(int8_t temp){
 	g_temp = temp;
 }
 
-void setLUX(int8_t lux){
+void setLUX(int16_t lux){
 	g_lux = lux;
 }
 
@@ -31,7 +31,7 @@ void setHUM(int8_t hum){
 	g_hum = hum;
 }
 
-void setCO2(int8_t co2){
+void setCO2(int16_t co2){
 	g_co2 = co2;
 }
 

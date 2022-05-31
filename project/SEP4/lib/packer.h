@@ -11,10 +11,10 @@
 
 #include <lora_driver.h>
 
-int8_t g_temp;
-int8_t g_lux;
-int8_t g_hum;
-int8_t g_co2;
+int16_t g_temp;
+int16_t g_lux;
+int16_t g_hum;
+int16_t g_co2;
 
 extern lora_driver_payload_t loraPayload;
 
