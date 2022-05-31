@@ -63,3 +63,9 @@ dkms.conf
 
 # End of https://www.toptal.com/developers/gitignore/api/c
 project/.DS_Store
+project/.vs/SEP4IOT/v14/.atsuo
+*.elf
+project/.vs/SEP4IOT/v14/.atsuo
+*.elf
+*.hex
+*.o

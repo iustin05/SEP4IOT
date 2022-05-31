@@ -27,7 +27,7 @@
 #define SETTING_TIMEOUT_LUX 380000
 #define SETTING_TIMEOUT_TH 370000
 #define SETTING_CYCLE_SERVO 200000
-#define SETTING_CYCLE_APP 60000 // Time between two uploads (readings)
+#define SETTING_CYCLE_APP 300000 // Time between two uploads (readings) // 5 mins
 #define SETTING_TIMEOUT_WAIT_READY_BITS 200
 #define SETTING_TIMEOUT_WAIT_LED_BITS 7000
 
