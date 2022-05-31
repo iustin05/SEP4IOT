@@ -51,7 +51,7 @@ void downLinkTask(void *pvParameters)
 			status_leds_longPuls(led_ST2);
 			display_7seg_displayHex("C100");
 			puts("DL ...\n");
-			last_cfg = downLinkPayload.bytes[0];
+			last_cfg = downLinkPayload.bytes[1];
 			newConfig = PENDING; // trigger write into configuration
 			#ifdef DEBUG_EXTRA_DATA
 			printf("%d", downLinkPayload.len);
