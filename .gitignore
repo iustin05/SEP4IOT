@@ -1,6 +1,12 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c
 # Edit at https://www.toptal.com/developers/gitignore?templates=c
 
+### OTHERS [IUS] ###
+
+.DS_Store
+.vs
+.html
+
 ### C ###
 # Prerequisites
 *.d
