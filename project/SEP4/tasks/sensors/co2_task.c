@@ -37,6 +37,7 @@ void CO2Task(void *pvParameters)
 {
 	EventBits_t eventBits;
 	qPacketType_t sensorPacket;
+        mh_z19_takeMeassuring();
 	for(;;){
 		ready = 0;
 		eventBits = xEventGroupWaitBits(getMeasureEventGroup(),
